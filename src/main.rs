@@ -1,10 +1,9 @@
 use std::collections::HashMap;
-use std::process::id;
+
 use rs_graph::Builder;
-use rs_graph::maxflow::{edmondskarp, EdmondsKarp};
-use rs_graph::traits::DirectedEdge;
-use rs_graph::vecgraph::VecGraphBuilder;
+use rs_graph::maxflow::EdmondsKarp;
 use rs_graph::vecgraph::Node;
+use rs_graph::vecgraph::VecGraphBuilder;
 
 struct Present {
     name: &'static str,
@@ -35,7 +34,7 @@ fn C(name: &'static str, wishlist: Vec<&'static str>) -> Child {
 }
 
 fn main() {
-    let mut presents = vec![
+    /*let mut presents = vec![
         P("p1", 2),
         P("p2", 1),
         P("p3", 3),
@@ -46,6 +45,17 @@ fn main() {
         C("c1", vec!["p1", "p2"]),
         C("c2", vec!["p1", "p2", "p3", "p4"]),
         C("c3", vec!["p4", "p5"]),
+    ];*/
+
+    let mut presents = vec![
+        P("p1", 1),
+        P("p2", 1),
+        P("p3", 1),
+        P("p4", 1),
+    ];
+    let mut children = vec![
+        C("c1", vec!["p1", "p2", "p3", "p4"]),
+        C("c2", vec!["p3"]),
     ];
 
     let mut g = VecGraphBuilder::new();
@@ -111,7 +121,7 @@ fn main() {
         let x = -total * 0.5 + i as f64 * x_step;
         println!(r"\node[state] (c{}) at ({x}, {}){{$c_{}$}};", i + 1, -2.0 * y_step, i + 1);
     }
-    println!(r"\node[state] (end) at (0, {}) {{$E$}};", -3.0 * y_step);
+    println!(r"\node[state] (end) at (0, {}) {{$T$}};", -3.0 * y_step);
 
     for (e, f) in ek.flow_iter() {
         let (a, b, c) = edge_mappings[&e];
